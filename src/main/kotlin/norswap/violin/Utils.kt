@@ -12,7 +12,7 @@ import java.util.*
  * This file contains a smattering of functions that do not find their place anywhere else.
  */
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
  * Returns the result of [f].
@@ -20,7 +20,7 @@ import java.util.*
  */
 inline fun <T> expr(f: () -> T): T = f()
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
  * Returns the receiver after evaluating [f] on it.
@@ -30,7 +30,7 @@ inline infix fun <T> T.after(f: (T) -> Unit): T {
     return this
 }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
  * Syntactic sugar for `if (this) then f() else null`.
@@ -38,7 +38,7 @@ inline infix fun <T> T.after(f: (T) -> Unit): T {
 infix inline fun <T> Boolean.then(f: () -> T): T?
         = if (this) f() else null
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
  * Analogous to `Kotlin.arrayOf`, but doesn't require reification.
@@ -46,7 +46,7 @@ infix inline fun <T> Boolean.then(f: () -> T): T?
 @Suppress("UNCHECKED_CAST")
 fun <T : Any> array(vararg items: T) = items as Array<T>
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
  * Shorthand for [StringBuilder.append].
@@ -55,7 +55,7 @@ operator fun StringBuilder.plusAssign(s: String) {
     append(s)
 }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
  * Shorthand for [StringBuilder.append].
@@ -64,7 +64,7 @@ operator fun StringBuilder.plusAssign(o: Any?) {
     append(o)
 }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
  * Casts the receiver to [T].
@@ -75,7 +75,7 @@ operator fun StringBuilder.plusAssign(o: Any?) {
 @Suppress("UNCHECKED_CAST")
 fun <T> Any?.cast() = this as T
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
  * Like `String.substring` but allows [start] and [end] to be negative numbers.
@@ -101,17 +101,16 @@ operator fun CharSequence.get(start: Int, end: Int = length): String {
     return substring(a, b)
 }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
  * Reads a complete file and returns its contents as a string.
- * @throws IOException see [Files.readAllBytes]
- * @throws InvalidPathException see [Paths.get]
+// * @throws IOException see [Files.readAllBytes]
+// * @throws InvalidPathException see [Paths.get]
  */
-fun readFile(file: String)
-        = String(Files.readAllBytes(Paths.get(file)))
+fun readFile(file: String) = String(Files.readAllBytes(Paths.get(file)))
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
  * Returns a comparator for type T that delegates to a `Comparable` type U.
@@ -119,7 +118,7 @@ fun readFile(file: String)
 fun <T, U : Comparable<U>> comparator(f: (T) -> U)
         = Comparator<T> { o1, o2 -> f(o1).compareTo(f(o2)) }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
  * Returns a comparator for type [T] that delegates the receiver, a comparator for type [U].
@@ -127,7 +126,7 @@ fun <T, U : Comparable<U>> comparator(f: (T) -> U)
 fun <T, U> Comparator<U>.derive(f: (T) -> U)
         = Comparator<T> { o1, o2 -> compare(f(o1), f(o2)) }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
  * Returns a string representation of the Throwable's stack trace.
@@ -138,4 +137,3 @@ fun Throwable.stackTraceString(): String {
     return sw.toString()
 }
 
-// -------------------------------------------------------------------------------------------------

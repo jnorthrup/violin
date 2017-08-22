@@ -1,12 +1,12 @@
-# Package norswap.violin.stream
+# Package norswap.violin.toStream
 
 <(^.^<) <(^.^)> (>^.^)> 
 
 ## Stream Operations
 
 The extension functions for [Stream] can be split in two categories: transformers and consumers.
-Transformers take a stream as input and return another stream. Consumers consume items from
-the stream in order to produce a value.
+Transformers take a toStream as input and return another toStream. Consumers consume items from
+the toStream in order to produce a value.
 
 ### Transformers
 

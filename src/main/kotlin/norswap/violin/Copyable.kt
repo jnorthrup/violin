@@ -13,7 +13,7 @@ interface Copyable : Cloneable {
      */
     fun copy(): Any = clone()
 
-    // ---------------------------------------------------------------------------------------------
+
 
     /**
      * Same as [copy], but casts the copy to [T] (which should be inferred, use an explicit cast

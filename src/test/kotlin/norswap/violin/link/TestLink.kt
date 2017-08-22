@@ -5,8 +5,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNull
 
+/**  */
 class TestLink {
 
+    /**  */
     @org.junit.Test fun linkEmpty() {
         val link = Link<Int>()
         assertNull(link)
@@ -16,6 +18,7 @@ class TestLink {
     }
 
 
+    /**  */
     @org.junit.Test fun link() {
         val link = Link(1, 2, 3)
         var j = 0
@@ -27,6 +30,7 @@ class TestLink {
     }
 
 
+    /**  */
     @org.junit.Test fun linkStream() {
         val link = Link(1, 2, 3)
         var i = 0

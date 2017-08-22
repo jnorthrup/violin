@@ -5,7 +5,9 @@ import norswap.violin.stream.Utils.testStream
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
+/**  */
 class TestStack {
+    /**  */
     @org.junit.Test fun poppingStream() {
         testStream { LinkList(*it).poppingStream() }
         val stack = LinkList(1, 2, 3)

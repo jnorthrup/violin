@@ -2,7 +2,9 @@ package norswap.violin.utils
 
 import kotlin.test.assertEquals
 
+/**  */
 class TestUtils {
+    /**  */
     @org.junit.Test fun charSequenceGet() {
         val str = "12345"
         assertEquals(str[0, -1], str)

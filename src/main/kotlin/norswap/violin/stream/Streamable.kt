@@ -5,7 +5,7 @@ package norswap.violin.stream
  */
 interface Streamable<out T : Any> {
     /**
-     * Returns a stream tied to this object.
+     * Returns a toStream tied to this object.
      *
      * Two successive calls to this method must return equivalent streams, assuming no modification
      * to this object occurred in between the two calls. Two streams are equivalent if they yield
@@ -13,10 +13,10 @@ interface Streamable<out T : Any> {
      */
     fun stream(): Stream<T>
 
-    // ---------------------------------------------------------------------------------------------
+
 
     /**
-     * Returns an iterator backed by a stream.
+     * Returns an iterator backed by a toStream.
      *
      * This method is required in order to be able to use [Streamable] instances in Kotlin for
      * loops. This is why it is not an extension method

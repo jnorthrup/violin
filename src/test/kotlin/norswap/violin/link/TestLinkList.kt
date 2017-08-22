@@ -6,8 +6,10 @@ import kotlin.test.assertFalse
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
+/**  */
 class TestLinkList {
 
+    /**  */
     @org.junit.Test fun linkListEmpty() {
         val list = LinkList<Int>()
         assertEquals(list.size, 0)
@@ -17,6 +19,7 @@ class TestLinkList {
     }
 
 
+    /**  */
     @org.junit.Test fun linkList() {
         val list = LinkList(1, 2, 3)
         var j = 0
@@ -28,6 +31,7 @@ class TestLinkList {
     }
 
 
+    /**  */
     @org.junit.Test fun linkListSize() {
         val list = LinkList(1, 2, 3)
         assertEquals(list.size, 3)
@@ -36,6 +40,7 @@ class TestLinkList {
     }
 
 
+    /**  */
     @org.junit.Test fun linkListStack() {
         val list = LinkList(1, 2, 3)
         assertEquals(list.pop(), 1)
@@ -49,10 +54,11 @@ class TestLinkList {
     }
 
 
+    /**  */
     @org.junit.Test fun linkListEquals() {
         val first = LinkList(1, 2, 3)
         val second = LinkList(first.link, 3)
         assertEquals(first, second)
-        assertEquals(LinkList<Int>(), LinkList<Int>())
+        assertEquals(LinkList<Int>(), LinkList())
     }
 }

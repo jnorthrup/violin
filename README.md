@@ -16,14 +16,14 @@ orthogonal features and good documentation.
 
 ## Streams
 
-Violin's main attraction is its stream capabilities.
+Violin's main attraction is its toStream capabilities.
 
 Streams are best described as iterators, but on which transformations (`map`,
 `filter`, ...) can be applied lazily. Usually the same transformations are
-applied eagerly on the stream's source (e.g. `kotlin.List`) or lazily on the
+applied eagerly on the toStream's source (e.g. `kotlin.List`) or lazily on the
 source (e.g. `kotlin.Sequence`). Violin streams are close to Java streams, but
-(1) allow incremental (not all-at-once) consumption from the stream, and (2) do
-not complect parallelization with stream processing.
+(1) allow incremental (not all-at-once) consumption from the toStream, and (2) do
+not complect parallelization with toStream processing.
 
 Here is a completely bogus example (you're encouraged to submit a better one!):
 
@@ -36,10 +36,10 @@ Here is a completely bogus example (you're encouraged to submit a better one!):
         .joinToString(transform = { "${it.index}: ${it.value}" })
         .let { println(it) } // prints "0: 5, 1: 6, 2: 7, 3: 8, 4: 9, 5: 10"
         
-The stream interface is dead simple:
+The toStream interface is dead simple:
 
     interface Stream <out T: Any> {
-        fun stream(): T?
+        fun toStream(): T?
     }
 
 ## Other

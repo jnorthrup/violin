@@ -7,7 +7,7 @@ import norswap.violin.link.LinkList
 import java.util.*
 
 /**
- * This file defines extension functions of [Stream] that consume whole or part of the stream
+ * This file defines extension functions of [Stream] that consume whole or part of the toStream
  * to produce values or effects.
  *
  * Contents
@@ -22,7 +22,7 @@ import java.util.*
 /// [0] Other //////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Applies [f] to each item in the stream.
+ * Applies [f] to each item in the toStream.
  */
 inline fun <T : Any> Stream<T>.each(f: (T) -> Unit) {
     var tmp = next()
@@ -31,10 +31,10 @@ inline fun <T : Any> Stream<T>.each(f: (T) -> Unit) {
     }
 }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Returns the last item of this stream.
+ * Returns the last item of this toStream.
  */
 fun <T : Any> Stream<T>.last(): T? {
     var next = next()
@@ -45,28 +45,28 @@ fun <T : Any> Stream<T>.last(): T? {
     return last
 }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Indicates whether any item of this stream matches the given predicate.
- * This consumes items in the stream up to and including the one matching the predicate.
+ * Indicates whether any item of this toStream matches the given predicate.
+ * This consumes items in the toStream up to and including the one matching the predicate.
  */
 inline fun <T : Any> Stream<T>.any(crossinline p: (T) -> Boolean): Boolean
         = filter(p).next() != null
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Indicates whether all items of this stream match the given predicate
- * (true if the stream is empty).
+ * Indicates whether all items of this toStream match the given predicate
+ * (true if the toStream is empty).
  */
 inline fun <T : Any> Stream<T>.all(crossinline p: (T) -> Boolean): Boolean
         = filter { !p(it) }.next() == null
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Returns the number of items left in the stream, consuming all items in the process.
+ * Returns the number of items left in the toStream, consuming all items in the process.
  */
 fun <T : Any> Stream<T>.count(): Int {
     var count = 0
@@ -77,7 +77,7 @@ fun <T : Any> Stream<T>.count(): Int {
 /// [2] Create Data Structures /////////////////////////////////////////////////////////////////////
 
 /**
- * Pulls all the items of the stream into a mutable list and returns it.
+ * Pulls all the items of the toStream into a mutable list and returns it.
  */
 fun <T : Any> Stream<T>.mutableList(): MutableList<T> {
     val list = arrayListOf<T>()
@@ -85,18 +85,18 @@ fun <T : Any> Stream<T>.mutableList(): MutableList<T> {
     return list
 }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Pulls all the items of the stream into a list and returns it.
+ * Pulls all the items of the toStream into a list and returns it.
  */
 fun <T : Any> Stream<T>.list(): List<T>
         = mutableList()
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Pulls all the items of the stream into a mutable set and returns it.
+ * Pulls all the items of the toStream into a mutable set and returns it.
  */
 fun <T : Any> Stream<T>.mutableSet(): MutableSet<T> {
     val set = mutableSetOf<T>()
@@ -104,18 +104,18 @@ fun <T : Any> Stream<T>.mutableSet(): MutableSet<T> {
     return set
 }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Pulls all the items of the stream into a set and returns it.
+ * Pulls all the items of the toStream into a set and returns it.
  */
 fun <T : Any> Stream<T>.set(): Set<T>
         = mutableSet()
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Pulls all the items of the stream into a link list (the first item of the stream will
+ * Pulls all the items of the toStream into a link list (the first item of the toStream will
  * be the last item of the list) and returns it.
  */
 fun <T : Any> Stream<T>.linkList(): LinkList<T> {
@@ -124,27 +124,27 @@ fun <T : Any> Stream<T>.linkList(): LinkList<T> {
     return list
 }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Pulls all the items of the stream into a stack (the first item of the stream will
+ * Pulls all the items of the toStream into a stack (the first item of the toStream will
  * be the last item of the list) and returns it.
  */
 fun <T : Any> Stream<T>.stack(): Stack<T>
         = linkList()
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Pulls all the items of the stream into an array and returns it.
+ * Pulls all the items of the toStream into an array and returns it.
  */
 inline fun <reified T : Any> Stream<T>.array(): Array<T>
         = mutableList().toTypedArray()
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Pulls all the items of the stream into an array (with type parameter Any) and returns it.
+ * Pulls all the items of the toStream into an array (with type parameter Any) and returns it.
  */
 @Suppress("PLATFORM_CLASS_MAPPED_TO_KOTLIN")
 fun Stream<Any>.anyArray(): Array<Any>
@@ -153,7 +153,7 @@ fun Stream<Any>.anyArray(): Array<Any>
 /// [3] Reducing ///////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Folds [reduce] over the items of the stream, from left to right, using [first] as initial
+ * Folds [reduce] over the items of the toStream, from left to right, using [first] as initial
  * item on the left.
  *
  * e.g. `Stream(1, 2, 3).foldl(0) { r, t -> r + t }` == `(((0 + 1) + 2) + 3)`
@@ -164,10 +164,10 @@ inline fun <T : Any, R> Stream<T>.foldl(first: R, reduce: (R, T) -> R): R {
     return tmp
 }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Folds [reduce] over the items of the stream, from right to left, using [last] as initial
+ * Folds [reduce] over the items of the toStream, from right to left, using [last] as initial
  * item on the right.
  *
  * e.g. `Stream(1, 2, 3).foldr(0) { r, t -> r + t }` == `(((0 + 3) + 2) + 1)`
@@ -175,20 +175,20 @@ inline fun <T : Any, R> Stream<T>.foldl(first: R, reduce: (R, T) -> R): R {
 inline fun <T : Any, R> Stream<T>.foldr(last: R, reduce: (R, T) -> R): R
         = list().reverseStream().foldl(last, reduce)
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Folds [f] over the items of the stream, from left to right.
+ * Folds [f] over the items of the toStream, from left to right.
  *
  * e.g. `Stream(1, 2, 3).reduce { r, t -> r + t }` == ((1 + 2) + 3)`
  */
 inline fun <T : Any> Stream<T>.reduce(f: (T, T) -> T): T?
         = next()?.let { foldl(it, f) }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Folds [f] over the items of the stream, from right to left.
+ * Folds [f] over the items of the toStream, from right to left.
  *
  * e.g. `Stream(1, 2, 3).reduce { r, t -> r + t }` == `((3 + 2) + 1)`
  */
@@ -198,54 +198,54 @@ inline fun <T : Any> Stream<T>.reduceRight(f: (T, T) -> T): T?
 /// [4] Extrema ////////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Return the maximum item of the stream according to [cmp]
+ * Return the maximum item of the toStream according to [cmp]
  * (same contract as `java.util.Comparator.compare`).
  * If two items compare identical, the earliest will be preferred.
  */
 inline fun <T : Any> Stream<T>.maxWith(cmp: (T, T) -> Int): T?
         = reduce { r, t -> if (cmp(r, t) >= 0) r else t }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Return the minimum item of the stream according to [cmp]
+ * Return the minimum item of the toStream according to [cmp]
  * (same contract as `java.util.Comparator.compare`).
  * If two items compare identical, the earliest will be preferred.
  */
 inline fun <T : Any> Stream<T>.minWith(cmp: (T, T) -> Int): T?
         = reduce { r, t -> if (cmp(r, t) <= 0) r else t }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Return the maximum item of the stream.
+ * Return the maximum item of the toStream.
  * If two items compare identical, the earliest will be preferred.
  */
 fun <T : Comparable<T>> Stream<T>.max(): T?
         = maxWith { a, b -> a.compareTo(b) }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Return the minimum item of the stream.
+ * Return the minimum item of the toStream.
  * If two items compare identical, the earliest will be preferred.
  */
 fun <T : Comparable<T>> Stream<T>.min(): T?
         = minWith { a, b -> a.compareTo(b) }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Return the maximum item of the stream, determined by delegation to [cmp].
+ * Return the maximum item of the toStream, determined by delegation to [cmp].
  * If two items compare identical, the earliest will be preferred.
  */
 fun <T : Any> Stream<T>.maxWith(cmp: Comparator<T>): T?
         = maxWith { a, b -> cmp.compare(a, b) }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Return the minimum item of the stream, determined by delegation to [cmp].
+ * Return the minimum item of the toStream, determined by delegation to [cmp].
  * If two items compare identical, the earliest will be preferred.
  */
 fun <T : Any> Stream<T>.minWith(cmp: Comparator<T>): T?
@@ -254,8 +254,8 @@ fun <T : Any> Stream<T>.minWith(cmp: Comparator<T>): T?
 /// [5] Partition //////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Returns a mutable map that contains the entry returned by [f] for each item in the stream.
- * The items are inserted in stream order, so the latest item which claims a key wins.
+ * Returns a mutable map that contains the entry returned by [f] for each item in the toStream.
+ * The items are inserted in toStream order, so the latest item which claims a key wins.
  */
 fun <T : Any, K, V> Stream<T>.associateMutable(f: (T) -> Pair<K, V>): MutableMap<K, V> {
     val out = mutableMapOf<K, V>()
@@ -263,19 +263,19 @@ fun <T : Any, K, V> Stream<T>.associateMutable(f: (T) -> Pair<K, V>): MutableMap
     return out
 }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Returns a mutable map that contains the entry returned by [f] for each item in the stream.
- * The items are inserted in stream order, so the latest item which claims a key wins.
+ * Returns a mutable map that contains the entry returned by [f] for each item in the toStream.
+ * The items are inserted in toStream order, so the latest item which claims a key wins.
  */
 fun <T : Any, K, V> Stream<T>.associate(f: (T) -> Pair<K, V>): Map<K, V>
         = associateMutable(f)
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
- * Groups items in the stream by the selector returned by [selector].
+ * Groups items in the toStream by the selector returned by [selector].
  */
 fun <T : Any, K> Stream<T>.groupBy(selector: (T) -> K): Map<K, List<T>> {
     val map = mutableMapOf<K, MutableList<T>>()
@@ -283,7 +283,7 @@ fun <T : Any, K> Stream<T>.groupBy(selector: (T) -> K): Map<K, List<T>> {
     return map
 }
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
  * Groups items in two lists depending on whether [predicate] returns true (first list) or
@@ -315,7 +315,7 @@ fun <T : Any, A : Appendable> Stream<T>.joinTo(
 ): A
         = list().joinTo(buffer, separator, prefix, postfix, limit, truncated, transform)
 
-// -------------------------------------------------------------------------------------------------
+
 
 /**
  * Creates a string from all the items separated using [separator] and using the given [prefix] and
@@ -333,4 +333,4 @@ fun <T : Any> Stream<T>.joinToString(
 ): String
         = list().joinToString(separator, prefix, postfix, limit, truncated, transform)
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+
